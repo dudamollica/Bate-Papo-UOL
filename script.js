@@ -63,5 +63,19 @@ conexaoPromise=axios.post("https://mock-api.driven.com.br/api/v6/uol/status",con
 }
 
 function adicionarNovaMensagem(){
+oqEscreveu= document.querySelector("textarea").value
+console.log(oqEscreveu)
+const msgParaEnviar={
+	from: nome,
+	to: "Todos",
+	text: oqEscreveu,
+	type: "message"
+}
+const enviaMsgPromise=axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", msgParaEnviar)
+enviaMsgPromise.catch(iniciaDeNovo)
+}
 
+function iniciaDeNovo(){
+    alert("Você foi desconectado")
+    window.location.reload()
 }
