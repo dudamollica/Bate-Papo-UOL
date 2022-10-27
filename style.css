@@ -13,6 +13,7 @@ main{
 *{
     box-sizing: border-box;
 }
+/* TELA DE ENTRADA */
 .tela-entrada{
     position: absolute;
     width: 100%;
@@ -41,6 +42,16 @@ input{
     height: 54px;
     width: 260px;
 }
+
+/* TELA DE PARTICIPANTES */
+.participantes{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.6);
+}
+
 
 /* HEADER */
 header{

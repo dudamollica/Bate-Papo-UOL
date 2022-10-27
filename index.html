@@ -15,8 +15,16 @@
     <input type=text placeholder="Digite seu nome"></input>
     <button onclick="entrar()">Entrar</button>
     </div>
+
+    <div class="participantes escondido" onclick=" participantesDesaparece()">
+        <div class="lista-contatos">
+
+        </div>
+    </div>
+
+
     <header><img class="logo" src="imagens/logo.png"/> 
-    <ion-icon class="contatos" name="people"></ion-icon> 
+    <ion-icon onclick="participantesAparece()" class="contatos" name="people"></ion-icon> 
     </header>
 
     <ul class="chat">

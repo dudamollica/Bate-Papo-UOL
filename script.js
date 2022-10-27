@@ -1,16 +1,21 @@
 let listaMensagens=[];
 let mesagePromise;
-let elemento;
+let ultimaMsg;
 let entrouPromise;
 let nome;
+let mensagensInteiras=[];
 
 function entrar(){
 nomeImput=document.querySelector("input")
 nome=nomeImput.value
-console.log(nome)
+if(nome != ""){
 sumiTela= document.querySelector(".tela-entrada")
 sumiTela.classList.add("escondido")
 entradaNaSala()
+}
+else{
+    alert("Digite um nome válido")
+}
 }
 
 //para as mensagens já aparecerem na tela assim que iniciar
@@ -26,28 +31,27 @@ function mensagensData(resposta){
     listaMensagens=resposta.data
     randerizarMensagens()
 }
-
 function randerizarMensagens(){
     let chat=document.querySelector('.chat')
     chat.innerHTML=""
     for(let i=0;i<listaMensagens.length;i++){
         let mensagem= listaMensagens[i];
-        // elemento=document.getElementById(`"${i}"`)
 
     if(mensagem.text=="entra na sala..." || mensagem.text=="sai da sala..."){
-    chat.innerHTML+= `<li class="msg entrou-saiu" id=${i}> <span class="time">(${mensagem.time}) </span> 
-    <strong> ${mensagem.from}   </strong>   ${mensagem.text} </li>` 
+    mensagensInteiras.push(chat.innerHTML+= `<li class="msg entrou-saiu" id=${i}> <span class="time">(${mensagem.time}) </span> 
+    <strong> ${mensagem.from}   </strong>   ${mensagem.text} </li>`)
     }
     else if (mensagem.to=="Todos"){
-    chat.innerHTML+= `<li class="msg mensagem" ${i}> <span class="time">(${mensagem.time}) </span> 
-    <strong> ${mensagem.from}</strong>  para <strong>${mensagem.to}</strong>: ${mensagem.text} </li>`
+    mensagensInteiras.push(chat.innerHTML+= `<li class="msg mensagem" ${i}> <span class="time">(${mensagem.time}) </span> 
+    <strong> ${mensagem.from}</strong>  para <strong>${mensagem.to}</strong>: ${mensagem.text} </li>`)
     } 
     else{
-    chat.innerHTML+= `<li class="msg mensagem-reservada" id=${i}> <span class="time">(${mensagem.time}) </span> 
-    <strong> ${mensagem.from}</strong> reservadamente para <strong>${mensagem.to}</strong>: ${mensagem.text} </li>`   
+    mensagensInteiras.push(chat.innerHTML+= `<li class="msg mensagem-reservada" id=${i}> <span class="time">(${mensagem.time}) </span> 
+    <strong> ${mensagem.from}</strong> reservadamente para <strong>${mensagem.to}</strong>: ${mensagem.text} </li>`)   
+    } 
     }
-    // elemento.scrollIntoView()
-    }
+    let ultimaMsg= document.querySelector(".chat").lastElementChild
+    ultimaMsg.scrollIntoView()
 }
 
 
@@ -58,6 +62,8 @@ entrouPromise.catch(nomeJaExiste)
 }
 
 function nomeJaExiste(){
+    naoSomeTela= document.querySelector(".tela-entrada")
+    naoSomeTela.classList.remove("escondido")
     alert("Já exite um usuário com este nome, por favor digite outro")
 }
 
@@ -84,4 +90,14 @@ areaEscrita.value=""
 function iniciaDeNovo(){
     alert("Você foi desconectado")
     window.location.reload()
+}
+
+//tela de participantes
+function participantesAparece(){
+    telaParticipantes=document.querySelector(".participantes");
+    telaParticipantes.classList.remove("escondido")
+}
+function participantesDesaparece(){
+    telaParticipantes=document.querySelector(".participantes");
+    telaParticipantes.classList.add("escondido")
 }
