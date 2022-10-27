@@ -4,8 +4,14 @@ let elemento;
 let entrouPromise;
 let nome;
 
-nome=prompt("Qual o seu lindo nome?")
+function entrar(){
+nomeImput=document.querySelector("input")
+nome=nomeImput.value
+console.log(nome)
+sumiTela= document.querySelector(".tela-entrada")
+sumiTela.classList.add("escondido")
 entradaNaSala()
+}
 
 //para as mensagens já aparecerem na tela assim que iniciar
 mesagePromise = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
@@ -52,8 +58,7 @@ entrouPromise.catch(nomeJaExiste)
 }
 
 function nomeJaExiste(){
-    nome=prompt("Já exite um usuário com este nome, por favor digite outro")
-    entradaNaSala()
+    alert("Já exite um usuário com este nome, por favor digite outro")
 }
 
 setInterval(manterConexao, 5000)
@@ -64,6 +69,7 @@ conexaoPromise=axios.post("https://mock-api.driven.com.br/api/v6/uol/status",con
 
 function adicionarNovaMensagem(){
 oqEscreveu= document.querySelector("textarea").value
+areaEscrita=document.querySelector("textarea")
 console.log(oqEscreveu)
 const msgParaEnviar={
 	from: nome,
@@ -73,8 +79,8 @@ const msgParaEnviar={
 }
 const enviaMsgPromise=axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", msgParaEnviar)
 enviaMsgPromise.catch(iniciaDeNovo)
+areaEscrita.value=""
 }
-
 function iniciaDeNovo(){
     alert("Você foi desconectado")
     window.location.reload()
