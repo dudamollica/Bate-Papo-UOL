@@ -3,7 +3,6 @@ let mesagePromise;
 let ultimaMsg;
 let entrouPromise;
 let nome;
-let mensagensInteiras=[];
 
 function entrar(){
 nomeImput=document.querySelector("input")
@@ -38,16 +37,16 @@ function randerizarMensagens(){
         let mensagem= listaMensagens[i];
 
     if(mensagem.text=="entra na sala..." || mensagem.text=="sai da sala..."){
-    mensagensInteiras.push(chat.innerHTML+= `<li class="msg entrou-saiu" id=${i}> <span class="time">(${mensagem.time}) </span> 
-    <strong> ${mensagem.from}   </strong>   ${mensagem.text} </li>`)
+    chat.innerHTML+= `<li class="msg entrou-saiu" id=${i}> <span class="time">(${mensagem.time}) </span> 
+    <strong> ${mensagem.from}   </strong>   ${mensagem.text} </li>`
     }
     else if (mensagem.to=="Todos"){
-    mensagensInteiras.push(chat.innerHTML+= `<li class="msg mensagem" ${i}> <span class="time">(${mensagem.time}) </span> 
-    <strong> ${mensagem.from}</strong>  para <strong>${mensagem.to}</strong>: ${mensagem.text} </li>`)
+    chat.innerHTML+= `<li class="msg mensagem" ${i}> <span class="time">(${mensagem.time}) </span> 
+    <strong> ${mensagem.from}</strong>  para <strong>${mensagem.to}</strong>: ${mensagem.text} </li>`
     } 
     else{
-    mensagensInteiras.push(chat.innerHTML+= `<li class="msg mensagem-reservada" id=${i}> <span class="time">(${mensagem.time}) </span> 
-    <strong> ${mensagem.from}</strong> reservadamente para <strong>${mensagem.to}</strong>: ${mensagem.text} </li>`)   
+    chat.innerHTML+= `<li class="msg mensagem-reservada" id=${i}> <span class="time">(${mensagem.time}) </span> 
+    <strong> ${mensagem.from}</strong> reservadamente para <strong>${mensagem.to}</strong>: ${mensagem.text} </li>` 
     } 
     }
     let ultimaMsg= document.querySelector(".chat").lastElementChild
@@ -76,7 +75,9 @@ conexaoPromise=axios.post("https://mock-api.driven.com.br/api/v6/uol/status",con
 function adicionarNovaMensagem(){
 oqEscreveu= document.querySelector("textarea").value
 areaEscrita=document.querySelector("textarea")
-console.log(oqEscreveu)
+if(oqEscreveu==""){
+  oqescreveu==="Mensagem vazia"
+}
 const msgParaEnviar={
 	from: nome,
 	to: "Todos",
@@ -92,12 +93,34 @@ function iniciaDeNovo(){
     window.location.reload()
 }
 
+//ENTER para 'Entrar'
+document.addEventListener("keypress",function(e){
+    sumiTela= document.querySelector(".tela-entrada")
+    if(e.key === "Enter" && !sumiTela.classList.contains("escondido")){
+        const enviarNome = document.querySelector("button")
+        enviarNome.click()
+    }
+})
+//ENTER para 'Enviar mensagem'
+document.addEventListener("keypress",function(e){
+    sumiTela= document.querySelector(".tela-entrada")
+    if(e.key === "Enter"){
+        const enviarMSG = document.querySelector(".envia-mensagem")
+        enviarMSG.click()
+    }
+})
+
+
 //tela de participantes
 function participantesAparece(){
     telaParticipantes=document.querySelector(".participantes");
     telaParticipantes.classList.remove("escondido")
+    listaContatos=document.querySelector(".lista-contatos");
+    listaContatos.classList.remove("escondido");
 }
 function participantesDesaparece(){
     telaParticipantes=document.querySelector(".participantes");
     telaParticipantes.classList.add("escondido")
+    listaContatos=document.querySelector(".lista-contatos");
+    listaContatos.classList.add("escondido");
 }
