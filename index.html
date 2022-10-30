@@ -16,9 +16,9 @@
     <button onclick="entrar()" data-identifier="start">Entrar</button>
     </div>
 
-    <div class="tela-escura" onclick=" participantesDesaparece()"></div>
+    <div class="tela-escura escondido" onclick=" participantesDesaparece()"></div>
 
-        <div class="participantes">
+        <div class="participantes escondido">
 
         <div class="titulo">Escolha um contato </br> para enviar mensagem:</div>
 
@@ -36,14 +36,14 @@
         <div class="caixa" onclick="selecionarVisibilidade(this)">
         <span data-identifier="visibility">
             <ion-icon class="icon" name="lock-open"></ion-icon>
-            <span class="opçao">Público</span>
+            <span class="opçao opcaoVisibilidade selected">Público</span>
         </span>
         <ion-icon class="check visibilidadeSelecionada" name="checkmark-circle"></ion-icon>
         </div>
         <div class="caixa" onclick="selecionarVisibilidade(this)">
         <span data-identifier="visibility">
             <ion-icon class="icon" name="lock-closed"></ion-icon>
-            <span class="opçao">Reservadamente</span>
+            <span class="opçao opcaoVisibilidade ">Reservadamente</span>
         </span>
         <ion-icon class="check escondido" name="checkmark-circle"></ion-icon>
         </div>

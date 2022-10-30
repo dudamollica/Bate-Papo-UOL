@@ -4,6 +4,7 @@ let ultimaMsg;
 let entrouPromise;
 let nome;
 let participantes=[];
+let tipo;
 
 function entrar(){
 nomeImput=document.querySelector("input")
@@ -34,6 +35,7 @@ function mensagensData(resposta){
 function randerizarMensagens(){
     let chat=document.querySelector('.chat')
     chat.innerHTML=""
+
     for(let i=0;i<listaMensagens.length;i++){
         let mensagem= listaMensagens[i];
 
@@ -41,13 +43,19 @@ function randerizarMensagens(){
     chat.innerHTML+= `<li class="msg entrou-saiu" id=${i}> <span class="time">(${mensagem.time}) </span> 
     <strong> ${mensagem.from}   </strong>   ${mensagem.text} </li>`
     }
-    else if (mensagem.to=="Todos"){
-    chat.innerHTML+= `<li class="msg mensagem" ${i}> <span class="time">(${mensagem.time}) </span> 
-    <strong> ${mensagem.from}</strong>  para <strong>${mensagem.to}</strong>: ${mensagem.text} </li>`
-    } 
-    else{
-    chat.innerHTML+= `<li class="msg mensagem-reservada" id=${i}> <span class="time">(${mensagem.time}) </span> 
-    <strong> ${mensagem.from}</strong> reservadamente para <strong>${mensagem.to}</strong>: ${mensagem.text} </li>` 
+    else if (mensagem.type=="private_message" && mensagem.to!="Todos" ) {
+        if(nome!=mensagem.to || nome!=mensagem.from){
+        chat.innerHTML+= `<li class="msg mensagem-reservada escondido" id=${i}> <span class="time">(${mensagem.time}) </span> 
+        <strong> ${mensagem.from}</strong> reservadamente para <strong>${mensagem.to}</strong>: ${mensagem.text} </li>`
+        }
+        else{
+        chat.innerHTML+= `<li class="msg mensagem-reservada" id=${i}> <span class="time">(${mensagem.time}) </span> 
+        <strong> ${mensagem.from}</strong> reservadamente para <strong>${mensagem.to}</strong>: ${mensagem.text} </li>`
+        }
+    }
+    else if(mensagem.to=="Todos" || mensagem.type== "message"){
+        chat.innerHTML+= `<li class="msg mensagem" ${i}> <span class="time">(${mensagem.time}) </span> 
+        <strong> ${mensagem.from}</strong>  para <strong>${mensagem.to}</strong>: ${mensagem.text} </li>`
     } 
     }
     ultimaMsg= document.querySelector(".chat").lastElementChild
@@ -81,11 +89,20 @@ if(oqEscreveu==""){
 }
 const contatoSelecionado = document.querySelector('.participante')
 const contato =contatoSelecionado.innerHTML
+
+const visibilidadeSelecionada= document.querySelector(".selected")
+const visibilidade= visibilidadeSelecionada.innerHTML
+if (visibilidade=="Público"){
+  tipo="message"
+}
+else {
+  tipo= "private_message"
+}
 const msgParaEnviar={
 	from: nome,
 	to: contato,
 	text: oqEscreveu,
-	type: "message"
+	type: tipo 
 }
 const enviaMsgPromise=axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", msgParaEnviar)
 enviaMsgPromise.catch(iniciaDeNovo)
@@ -185,4 +202,9 @@ function selecionarVisibilidade(visibilidadeEscolhida){
     const check= visibilidadeEscolhida.querySelector(".check")
     check.classList.remove("escondido")
     check.classList.add("visibilidadeSelecionada")
+
+    const selecionada = document.querySelector(".selected")
+    selecionada.classList.remove("selected")
+    const opcaoVisibilidade = visibilidadeEscolhida.querySelector(".opcaoVisibilidade")
+    opcaoVisibilidade.classList.add("selected")
 }

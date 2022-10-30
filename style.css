@@ -44,6 +44,9 @@ input{
 }
 
 /* TELA DE PARTICIPANTES */
+.selected{
+    background-color: blue;
+}
 .tela-escura{
     position: absolute;
     width: 100%;
@@ -91,6 +94,9 @@ span{
     display:flex;
     justify-content: space-between;
     align-items: center;
+}
+.caixa :hover{
+    cursor: pointer;
 }
 .check{
     color:#28BB25;
