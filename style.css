@@ -44,9 +44,6 @@ input{
 }
 
 /* TELA DE PARTICIPANTES */
-.selected{
-    background-color: blue;
-}
 .tela-escura{
     position: absolute;
     width: 100%;

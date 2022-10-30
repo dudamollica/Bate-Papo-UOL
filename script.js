@@ -44,7 +44,7 @@ function randerizarMensagens(){
     <strong> ${mensagem.from}   </strong>   ${mensagem.text} </li>`
     }
     else if (mensagem.type=="private_message" && mensagem.to!="Todos" ) {
-        if(nome!=mensagem.to || nome!=mensagem.from){
+        if(nome!=mensagem.to && nome!=mensagem.from){
         chat.innerHTML+= `<li class="msg mensagem-reservada escondido" id=${i}> <span class="time">(${mensagem.time}) </span> 
         <strong> ${mensagem.from}</strong> reservadamente para <strong>${mensagem.to}</strong>: ${mensagem.text} </li>`
         }
@@ -56,7 +56,7 @@ function randerizarMensagens(){
     else if(mensagem.to=="Todos" || mensagem.type== "message"){
         chat.innerHTML+= `<li class="msg mensagem" ${i}> <span class="time">(${mensagem.time}) </span> 
         <strong> ${mensagem.from}</strong>  para <strong>${mensagem.to}</strong>: ${mensagem.text} </li>`
-    } 
+     } 
     }
     ultimaMsg= document.querySelector(".chat").lastElementChild
     ultimaMsg.scrollIntoView()
@@ -92,6 +92,11 @@ const contato =contatoSelecionado.innerHTML
 
 const visibilidadeSelecionada= document.querySelector(".selected")
 const visibilidade= visibilidadeSelecionada.innerHTML
+
+if (contato=="Todos" && visibilidade== "Reservadamente"){
+    alert("Não é possíver mandar mensagem reservada para 'Todos'")
+    } 
+
 if (visibilidade=="Público"){
   tipo="message"
 }
@@ -185,13 +190,15 @@ function selecionarContato(contatoEscolhido){
     const selecionado= document.querySelector(".participante")
     selecionado.classList.remove("participante")
     contatoJaSelecionado.classList.add("escondido")
-
+    
     const opçaoContato= contatoEscolhido.querySelector(".opcaoContato")
     opçaoContato.classList.add("participante")
     const check= contatoEscolhido.querySelector(".check")
     check.classList.add("contatoSelecionado")
     check.classList.remove("escondido")
     
+
+    console.log(selecionado)
 }
 
 function selecionarVisibilidade(visibilidadeEscolhida){
