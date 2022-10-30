@@ -12,14 +12,42 @@
 <body>
     <main>
     <div class="tela-entrada"><img class="logo-entrada" src="imagens/logo 2.png"/>
-    <input type=text placeholder="Digite seu nome"></input>
-    <button onclick="entrar()">Entrar</button>
+    <input type=text placeholder="Digite seu nome" data-identifier="enter-name"></input>
+    <button onclick="entrar()" data-identifier="start">Entrar</button>
     </div>
 
-    <div class="participantes escondido" onclick=" participantesDesaparece()"></div>
-        <div class="lista-contatos escondido">
+    <div class="tela-escura" onclick=" participantesDesaparece()"></div>
 
+        <div class="participantes">
+
+        <div class="titulo">Escolha um contato </br> para enviar mensagem:</div>
+
+        <div class="caixa" onclick="selecionarContato(this)">
+        <span data-identifier="participant">
+            <ion-icon class="icon" name="people"></ion-icon>
+            <span class="opçao opcaoTodos opcaoContato participante">Todos</span>
+        </span>
+        <ion-icon class="check todos contatoSelecionado" name="checkmark-circle"></ion-icon>
         </div>
+
+        <div class="lista-contatos"></div>
+
+        <div class="titulo">Escolha a visibilidade:</div>
+        <div class="caixa" onclick="selecionarVisibilidade(this)">
+        <span data-identifier="visibility">
+            <ion-icon class="icon" name="lock-open"></ion-icon>
+            <span class="opçao">Público</span>
+        </span>
+        <ion-icon class="check visibilidadeSelecionada" name="checkmark-circle"></ion-icon>
+        </div>
+        <div class="caixa" onclick="selecionarVisibilidade(this)">
+        <span data-identifier="visibility">
+            <ion-icon class="icon" name="lock-closed"></ion-icon>
+            <span class="opçao">Reservadamente</span>
+        </span>
+        <ion-icon class="check escondido" name="checkmark-circle"></ion-icon>
+        </div>
+    </div>
 
 
     <header><img class="logo" src="imagens/logo.png"/> 

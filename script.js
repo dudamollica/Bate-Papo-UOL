@@ -3,6 +3,7 @@ let mesagePromise;
 let ultimaMsg;
 let entrouPromise;
 let nome;
+let participantes=[];
 
 function entrar(){
 nomeImput=document.querySelector("input")
@@ -49,7 +50,7 @@ function randerizarMensagens(){
     <strong> ${mensagem.from}</strong> reservadamente para <strong>${mensagem.to}</strong>: ${mensagem.text} </li>` 
     } 
     }
-    let ultimaMsg= document.querySelector(".chat").lastElementChild
+    ultimaMsg= document.querySelector(".chat").lastElementChild
     ultimaMsg.scrollIntoView()
 }
 
@@ -78,9 +79,11 @@ areaEscrita=document.querySelector("textarea")
 if(oqEscreveu==""){
   oqescreveu==="Mensagem vazia"
 }
+const contatoSelecionado = document.querySelector('.participante')
+const contato =contatoSelecionado.innerHTML
 const msgParaEnviar={
 	from: nome,
-	to: "Todos",
+	to: contato,
 	text: oqEscreveu,
 	type: "message"
 }
@@ -88,6 +91,7 @@ const enviaMsgPromise=axios.post("https://mock-api.driven.com.br/api/v6/uol/mess
 enviaMsgPromise.catch(iniciaDeNovo)
 areaEscrita.value=""
 }
+
 function iniciaDeNovo(){
     alert("Você foi desconectado")
     window.location.reload()
@@ -111,16 +115,74 @@ document.addEventListener("keypress",function(e){
 })
 
 
-//tela de participantes
+//Tela de participantes
 function participantesAparece(){
-    telaParticipantes=document.querySelector(".participantes");
+    telaParticipantes=document.querySelector(".tela-escura");
     telaParticipantes.classList.remove("escondido")
-    listaContatos=document.querySelector(".lista-contatos");
+    listaContatos=document.querySelector(".participantes");
     listaContatos.classList.remove("escondido");
 }
 function participantesDesaparece(){
-    telaParticipantes=document.querySelector(".participantes");
+    telaParticipantes=document.querySelector(".tela-escura");
     telaParticipantes.classList.add("escondido")
-    listaContatos=document.querySelector(".lista-contatos");
+    listaContatos=document.querySelector(".participantes");
     listaContatos.classList.add("escondido");
+}
+
+promiseParticipantes = axios.get("https://mock-api.driven.com.br/api/v6/uol/participants");
+promiseParticipantes.then(participantesData)
+setInterval(bucarParticipantes, 10000)
+function bucarParticipantes(){
+promiseParticipantes = axios.get("https://mock-api.driven.com.br/api/v6/uol/participants");
+promiseParticipantes.then(participantesData)
+}
+function participantesData(status){
+    participantes=status.data
+    randerizarParticipantes()
+}
+
+function randerizarParticipantes(){
+  let listaContatos = document.querySelector(".lista-contatos")
+  listaContatos.innerHTML=""
+  for(let i=0;i<participantes.length;i++){
+    let contato= participantes[i];
+  listaContatos.innerHTML += 
+            `<div class="caixa" onclick= "selecionarContato(this)">
+            <span data-identifier="participant">
+            <div><ion-icon class="icon" name="person-circle"></ion-icon></div>
+            <span class="opçao opcaoContato">${contato.name}</span>
+            </span>
+            <div><ion-icon class="check escondido" name="checkmark-circle"></ion-icon></div>
+            </div>`
+}
+const todos=document.querySelector(".todos")
+todos.classList.add("contatoSelecionado")
+todos.classList.remove("escondido")
+const opcaoTodos=document.querySelector(".opcaoTodos")
+opcaoTodos.classList.add("participante")
+}
+
+function selecionarContato(contatoEscolhido){
+    const contatoJaSelecionado = document.querySelector('.contatoSelecionado')
+    contatoJaSelecionado.classList.remove("contatoSelecionado")
+    const selecionado= document.querySelector(".participante")
+    selecionado.classList.remove("participante")
+    contatoJaSelecionado.classList.add("escondido")
+
+    const opçaoContato= contatoEscolhido.querySelector(".opcaoContato")
+    opçaoContato.classList.add("participante")
+    const check= contatoEscolhido.querySelector(".check")
+    check.classList.add("contatoSelecionado")
+    check.classList.remove("escondido")
+    
+}
+
+function selecionarVisibilidade(visibilidadeEscolhida){
+    const visibilidadeJaSelecionada = document.querySelector('.visibilidadeSelecionada')
+    visibilidadeJaSelecionada.classList.remove("visibilidadeSelecionada")
+    visibilidadeJaSelecionada.classList.add("escondido")
+
+    const check= visibilidadeEscolhida.querySelector(".check")
+    check.classList.remove("escondido")
+    check.classList.add("visibilidadeSelecionada")
 }
