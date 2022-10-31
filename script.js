@@ -5,6 +5,7 @@ let entrouPromise;
 let nome;
 let participantes=[];
 let tipo;
+let oqEscreveu;
 
 function entrar(){
 nomeImput=document.querySelector("input")
@@ -84,9 +85,7 @@ conexaoPromise=axios.post("https://mock-api.driven.com.br/api/v6/uol/status",con
 function adicionarNovaMensagem(){
 oqEscreveu= document.querySelector("textarea").value
 areaEscrita=document.querySelector("textarea")
-if(oqEscreveu==""){
-  oqescreveu==="Mensagem vazia"
-}
+
 const contatoSelecionado = document.querySelector('.participante')
 const contato =contatoSelecionado.innerHTML
 
@@ -94,7 +93,8 @@ const visibilidadeSelecionada= document.querySelector(".selected")
 const visibilidade= visibilidadeSelecionada.innerHTML
 
 if (contato=="Todos" && visibilidade== "Reservadamente"){
-    alert("Não é possíver mandar mensagem reservada para 'Todos'")
+    oqEscreveu=""
+    alert("Não é possíver mandar mensagem reservada para 'Todos', \n modifique a visibilidade para Público")
     } 
 
 if (visibilidade=="Público"){
@@ -111,17 +111,26 @@ const msgParaEnviar={
 }
 const enviaMsgPromise=axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", msgParaEnviar)
 enviaMsgPromise.catch(iniciaDeNovo)
+//para quando a mensagem for vazia
+if(oqEscreveu===""){
+    alert('Não é possíver enviar uma mensagem vazia')
+   }
 areaEscrita.value=""
 }
 
-function iniciaDeNovo(){
-    alert("Você foi desconectado")
+function iniciaDeNovo(erro){
+   if(oqEscreveu===""){
+    oqEscreveu="."
+   }
+    else{
+        alert("Você foi desconectado")
     window.location.reload()
+}
 }
 
 //ENTER para 'Entrar'
 document.addEventListener("keypress",function(e){
-    sumiTela= document.querySelector(".tela-entrada")
+    const sumiTela= document.querySelector(".tela-entrada")
     if(e.key === "Enter" && !sumiTela.classList.contains("escondido")){
         const enviarNome = document.querySelector("button")
         enviarNome.click()
@@ -129,8 +138,8 @@ document.addEventListener("keypress",function(e){
 })
 //ENTER para 'Enviar mensagem'
 document.addEventListener("keypress",function(e){
-    sumiTela= document.querySelector(".tela-entrada")
-    if(e.key === "Enter"){
+    areaEscrita=document.querySelector("textarea")
+    if(e.key === "Enter" && areaEscrita.value!==""){
         const enviarMSG = document.querySelector(".envia-mensagem")
         enviarMSG.click()
     }
@@ -197,8 +206,6 @@ function selecionarContato(contatoEscolhido){
     check.classList.add("contatoSelecionado")
     check.classList.remove("escondido")
     
-
-    console.log(selecionado)
 }
 
 function selecionarVisibilidade(visibilidadeEscolhida){
