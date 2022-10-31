@@ -33,11 +33,11 @@ main{
     width: 130px;
     height: 92px;
     margin-top: 150px;
-    margin-bottom: 80px;
+    margin-bottom: 70px;
 }
-/* .loading{
-
-} */
+.loading{
+    margin-bottom: 20px;
+}
 button{
     margin-top: 15px;
     background: #E7E7E7;

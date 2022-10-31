@@ -6,6 +6,8 @@ let nome;
 let participantes=[];
 let tipo;
 let oqEscreveu;
+let selectedContact;
+let selectedVisibility;
 
 //para as mensagens já aparecerem na tela assim que iniciar
 mesagePromise = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
@@ -14,12 +16,23 @@ mesagePromise.then(mensagensData)
 function entrar(){
 nomeImput=document.querySelector("input")
 nome=nomeImput.value
+
+sumirTela= document.querySelector(".tela-entrada")
 if(nome != ""){
-sumiTela= document.querySelector(".tela-entrada")
-sumiTela.classList.add("escondido")
-apareceFooter= document.querySelector("footer")
-apareceFooter.classList.remove("escondido")
 entradaNaSala()
+const imputNome= document.querySelector("input")
+imputNome.classList.add("escondido")
+
+const buttonEntrar= document.querySelector("button")
+buttonEntrar.classList.add("escondido")
+
+const loading= document.querySelector(".loading")
+loading.innerHTML+=`<img class="loading" src="imagens/gif.gif"/>
+<div class="entrando">Entrando...</div>`
+
+setTimeout(()=>sumirTela.classList.add("escondido"),1000)
+setTimeout(()=>apareceFooter= document.querySelector("footer"),1000)
+setTimeout(()=>apareceFooter.classList.remove("escondido"),1000)
 }
 else{
     alert("Digite um nome válido")
@@ -74,9 +87,8 @@ entrouPromise.catch(nomeJaExiste)
 }
 
 function nomeJaExiste(){
-    naoSomeTela= document.querySelector(".tela-entrada")
-    naoSomeTela.classList.remove("escondido")
     alert("Já exite um usuário com este nome, por favor digite outro")
+    window.location.reload()
 }
 
 setInterval(manterConexao, 5000)
@@ -195,6 +207,8 @@ function randerizarParticipantes(){
             <div><ion-icon class="check escondido" name="checkmark-circle"></ion-icon></div>
             </div>`
 }
+
+//Reseta o contato escolhido a cada 10 segundos
 const todos=document.querySelector(".todos")
 todos.classList.add("contatoSelecionado")
 todos.classList.remove("escondido")
@@ -210,7 +224,7 @@ function selecionarContato(contatoEscolhido){
     const selecionado= document.querySelector(".participante")
     selecionado.classList.remove("participante")
     contatoJaSelecionado.classList.add("escondido")
-    
+
     const opçaoContato= contatoEscolhido.querySelector(".opcaoContato")
     opçaoContato.classList.add("participante")
     const check= contatoEscolhido.querySelector(".check")
@@ -234,13 +248,17 @@ function selecionarVisibilidade(visibilidadeEscolhida){
     selecionada.classList.remove("selected")
     const opcaoVisibilidade = visibilidadeEscolhida.querySelector(".opcaoVisibilidade")
     opcaoVisibilidade.classList.add("selected")
+
     selectedVisibility=opcaoVisibilidade.innerHTML
 }
 
 function statusFrom(){
     const areaTexto = document.querySelector(".status-from")
-    if(selectedVisibility==undefined){
-        selectedVisibility="Público"}
+    if(selectedVisibility===undefined){
+        areaTexto.innerHTML=""
+        areaTexto.innerHTML+=`<span>Enviando para ${selectedContact} (Público)</span>`}
+    else{
         areaTexto.innerHTML=""
         areaTexto.innerHTML+=`<span>Enviando para ${selectedContact} (${selectedVisibility})</span>`
     }
+}
