@@ -12,6 +12,7 @@
 <body>
     <main>
     <div class="tela-entrada"><img class="logo-entrada" src="imagens/logo 2.png"/>
+    <div class="loading"></div>
     <input type=text placeholder="Digite seu nome" data-identifier="enter-name"></input>
     <button onclick="entrar()" data-identifier="start">Entrar</button>
     </div>
@@ -57,8 +58,12 @@
     <ul class="chat">
     </ul>
 
-    <footer>
-    <textarea placeholder="Escreva aqui..." required></textarea> <ion-icon onclick="adicionarNovaMensagem()" class="envia-mensagem" name="paper-plane-outline"></ion-icon>
+    <footer class="escondido">
+    <div class="area-de-texto">
+    <textarea placeholder="Escreva aqui..." required></textarea>
+    <div class="status-from">Enviando para Todos (Público)</div>
+    </div>
+    <ion-icon onclick="adicionarNovaMensagem()" class="envia-mensagem" name="paper-plane-outline"></ion-icon>
     </footer>
 
     </main>

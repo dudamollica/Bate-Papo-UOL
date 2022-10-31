@@ -7,12 +7,18 @@ let participantes=[];
 let tipo;
 let oqEscreveu;
 
+//para as mensagens já aparecerem na tela assim que iniciar
+mesagePromise = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
+mesagePromise.then(mensagensData)
+
 function entrar(){
 nomeImput=document.querySelector("input")
 nome=nomeImput.value
 if(nome != ""){
 sumiTela= document.querySelector(".tela-entrada")
 sumiTela.classList.add("escondido")
+apareceFooter= document.querySelector("footer")
+apareceFooter.classList.remove("escondido")
 entradaNaSala()
 }
 else{
@@ -20,9 +26,6 @@ else{
 }
 }
 
-//para as mensagens já aparecerem na tela assim que iniciar
-mesagePromise = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
-mesagePromise.then(mensagensData)
 //para atualizar as mensagens a cada 3 segundos
 setInterval(buscarMensagens, 3000)
 function buscarMensagens(){
@@ -152,12 +155,18 @@ function participantesAparece(){
     telaParticipantes.classList.remove("escondido")
     listaContatos=document.querySelector(".participantes");
     listaContatos.classList.remove("escondido");
+    desapareceFooter=document.querySelector("footer")
+    desapareceFooter.classList.add("escondido")
 }
 function participantesDesaparece(){
     telaParticipantes=document.querySelector(".tela-escura");
     telaParticipantes.classList.add("escondido")
     listaContatos=document.querySelector(".participantes");
     listaContatos.classList.add("escondido");
+    apareceFooter= document.querySelector("footer")
+    apareceFooter.classList.remove("escondido")
+
+    statusFrom()
 }
 
 promiseParticipantes = axios.get("https://mock-api.driven.com.br/api/v6/uol/participants");
@@ -191,6 +200,8 @@ todos.classList.add("contatoSelecionado")
 todos.classList.remove("escondido")
 const opcaoTodos=document.querySelector(".opcaoTodos")
 opcaoTodos.classList.add("participante")
+selectedContact="Todos"
+statusFrom()
 }
 
 function selecionarContato(contatoEscolhido){
@@ -205,6 +216,8 @@ function selecionarContato(contatoEscolhido){
     const check= contatoEscolhido.querySelector(".check")
     check.classList.add("contatoSelecionado")
     check.classList.remove("escondido")
+
+    selectedContact=opçaoContato.innerHTML
     
 }
 
@@ -221,4 +234,13 @@ function selecionarVisibilidade(visibilidadeEscolhida){
     selecionada.classList.remove("selected")
     const opcaoVisibilidade = visibilidadeEscolhida.querySelector(".opcaoVisibilidade")
     opcaoVisibilidade.classList.add("selected")
+    selectedVisibility=opcaoVisibilidade.innerHTML
 }
+
+function statusFrom(){
+    const areaTexto = document.querySelector(".status-from")
+    if(selectedVisibility==undefined){
+        selectedVisibility="Público"}
+        areaTexto.innerHTML=""
+        areaTexto.innerHTML+=`<span>Enviando para ${selectedContact} (${selectedVisibility})</span>`
+    }

@@ -2,6 +2,7 @@ body{
     font-family: 'Roboto';
     display: flex;
     justify-content: center;
+    height: 100%;
 }
 main{
     width: 375px;
@@ -32,10 +33,21 @@ main{
     width: 130px;
     height: 92px;
     margin-top: 150px;
-    margin-bottom: 94px;
+    margin-bottom: 80px;
 }
+/* .loading{
+
+} */
 button{
     margin-top: 15px;
+    background: #E7E7E7;
+    border-radius: 9px;
+    width: 109px;
+    height: 45px;
+    border-color:#E7E7E7;
+}
+button:hover{
+    background: lightgoldenrodyellow;
 }
 input{
     text-align: center;
@@ -131,7 +143,7 @@ header{
     padding-top: 26px;
     font-weight: 400;
     font-size: 14px;
-    margin-bottom: 72px;
+    margin-bottom: 50px;
     margin-top: 80px;
     overflow-y: scroll;
 }
@@ -173,7 +185,8 @@ strong{
 /* FOOTER */
 footer{
     width: 375px;
-    height: 70px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -199,4 +212,23 @@ textarea{
     font-style: italic;
     font-weight: 400;
     font-size: 18px;
+}
+textarea::placeholder{
+    color:black;
+    font-weight: 500;
+}
+.area-de-texto{
+    flex-direction: column;
+}
+.status-from{
+    color:#505050;
+    font-style: italic;
+    font-size: 16px;
+    margin-left: 17px;
+}
+
+@media(max-width:600px){
+    body{
+        height: 100%;
+    }
 }
