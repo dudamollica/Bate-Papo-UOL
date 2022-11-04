@@ -57,21 +57,21 @@ function randerizarMensagens(){
         let mensagem= listaMensagens[i];
 
     if(mensagem.text=="entra na sala..." || mensagem.text=="sai da sala..."){
-    chat.innerHTML+= `<li class="msg entrou-saiu" id=${i}> <span class="time">(${mensagem.time}) </span> 
+    chat.innerHTML+= `<li data-test="message" class="msg entrou-saiu" id=${i}> <span class="time">(${mensagem.time}) </span> 
     <strong> ${mensagem.from}   </strong>   ${mensagem.text} </li>`
     }
     else if (mensagem.type=="private_message" && mensagem.to!="Todos" ) {
         if(nome!=mensagem.to && nome!=mensagem.from){
-        chat.innerHTML+= `<li class="msg mensagem-reservada escondido" id=${i}> <span class="time">(${mensagem.time}) </span> 
+        chat.innerHTML+= `<li data-test="message" class="msg mensagem-reservada escondido" id=${i}> <span class="time">(${mensagem.time}) </span> 
         <strong> ${mensagem.from}</strong> reservadamente para <strong>${mensagem.to}</strong>: ${mensagem.text} </li>`
         }
         else{
-        chat.innerHTML+= `<li class="msg mensagem-reservada" id=${i}> <span class="time">(${mensagem.time}) </span> 
+        chat.innerHTML+= `<li data-test="message" class="msg mensagem-reservada" id=${i}> <span class="time">(${mensagem.time}) </span> 
         <strong> ${mensagem.from}</strong> reservadamente para <strong>${mensagem.to}</strong>: ${mensagem.text} </li>`
         }
     }
     else if(mensagem.to=="Todos" || mensagem.type== "message"){
-        chat.innerHTML+= `<li class="msg mensagem" ${i}> <span class="time">(${mensagem.time}) </span> 
+        chat.innerHTML+= `<li data-test="message" class="msg mensagem" ${i}> <span class="time">(${mensagem.time}) </span> 
         <strong> ${mensagem.from}</strong>  para <strong>${mensagem.to}</strong>: ${mensagem.text} </li>`
      } 
     }
@@ -199,12 +199,12 @@ function randerizarParticipantes(){
   for(let i=0;i<participantes.length;i++){
     let contato= participantes[i];
   listaContatos.innerHTML += 
-            `<div class="caixa" onclick= "selecionarContato(this)">
-            <span data-identifier="participant">
+            `<div data-test="participant" class="caixa" onclick= "selecionarContato(this)">
+            <span>
             <div><ion-icon class="icon" name="person-circle"></ion-icon></div>
             <span class="opçao opcaoContato">${contato.name}</span>
             </span>
-            <div><ion-icon class="check escondido" name="checkmark-circle"></ion-icon></div>
+            <div><ion-icon data-test="check" class="check escondido" name="checkmark-circle"></ion-icon></div>
             </div>`
 }
 
